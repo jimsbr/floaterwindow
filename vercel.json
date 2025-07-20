@@ -19,16 +19,5 @@
       "src": "/(.*)",
       "dest": "/public/$1"
     }
-  ],
-  "functions": {
-    "api/create-payment-intent.js": {
-      "maxDuration": 10
-    },
-    "api/confirm-payment.js": {
-      "maxDuration": 10
-    },
-    "api/download.js": {
-      "maxDuration": 30
-    }
-  }
+  ]
 } 
