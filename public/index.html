@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Floater Window - The Future of Video Floating</title>
+    
+    <!-- Open Graph / Facebook / X (Twitter) Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://floaterwindow.com/">
+    <meta property="og:title" content="Floater Window - YouTube Player That Floats Above Your Windows">
+    <meta property="og:description" content="A YouTube player that floats above your other windows. Perfect for multitasking on Mac with Apple Silicon support.">
+    <meta property="og:image" content="https://floaterwindow.com/preview-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://floaterwindow.com/">
+    <meta name="twitter:title" content="Floater Window - YouTube Player That Floats Above Your Windows">
+    <meta name="twitter:description" content="A YouTube player that floats above your other windows. Perfect for multitasking on Mac with Apple Silicon support.">
+    <meta name="twitter:image" content="https://floaterwindow.com/preview-image.png">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="description" content="A YouTube player that floats above your other windows. Perfect for multitasking on Mac with Apple Silicon support.">
+    <meta name="keywords" content="YouTube, floating window, Mac, Apple Silicon, multitasking, video player">
+    <meta name="author" content="Floater Window">
     <script src="https://js.stripe.com/v3/"></script>
     <style>
         * {
@@ -39,18 +60,19 @@
 
         .floating-orb {
             position: absolute;
-            border-radius: 50%;
+            border-radius: 8px;
             background: linear-gradient(45deg, rgba(255, 0, 50, 0.1), rgba(255, 100, 100, 0.05));
-            animation: float 6s ease-in-out infinite;
+            animation: float 4s ease-in-out infinite;
+            transition: transform 0.3s ease;
         }
 
         .orb1 { width: 200px; height: 200px; top: 20%; left: 10%; animation-delay: 0s; }
-        .orb2 { width: 300px; height: 300px; top: 60%; right: 5%; animation-delay: -2s; }
-        .orb3 { width: 150px; height: 150px; bottom: 20%; left: 20%; animation-delay: -4s; }
+        .orb2 { width: 300px; height: 300px; top: 60%; right: 5%; animation-delay: -1.5s; }
+        .orb3 { width: 150px; height: 150px; bottom: 20%; left: 20%; animation-delay: -3s; }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(180deg); }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-40px); }
         }
 
         /* Header */
@@ -333,6 +355,26 @@
         .demo-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(255, 0, 50, 0.3);
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background: #000000;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         /* Features Grid */
@@ -807,7 +849,7 @@
             <div class="logo"></div>
             <div class="nav-links">
                 <a href="#demo" class="demo-btn">Demo</a>
-                <a href="#" onclick="openPaymentModal()">Get It Now</a>
+                <a href="#contact" class="contact-btn">Contact</a>
             </div>
         </nav>
     </header>
@@ -816,8 +858,8 @@
     <section class="hero">
         <div class="container">
             <h1>Floater Window</h1>
-            <p>The future of floating video is here. A standalone Mac app that transforms how you watch YouTube.</p>
-            <a href="#" class="cta-button" onclick="openPaymentModal()">Download - Built for Apple Silicon</a>
+            <p>The future of floating video is here. A standalone Mac app that transforms how you watch YouTube. Designed for Productivity.</p>
+            <a href="#" class="cta-button" onclick="openPaymentModal()">Download for Apple Silicon</a>
         </div>
     </section>
 
@@ -988,16 +1030,63 @@
             <p>Explore other new features being worked on, try YouLearn out by entering in any YouTube video<br> into their website to study videos quicker with an AI synopsis:</p>
             
             <a href="https://app.youlearn.ai/?via=floaterwindow" target="_blank" class="partner-button">
-                🤝 Check out our Partner YouLearn (Get a large Discount off their services)
+                🤝 Check out partner YouLearn (Get a large Discount off their services)
             </a>
             
-            <div class="price-info">
-                <h3>🎯 Early Bird</h3>
-                <p>Get Floater Window now before the Mac App Store release. Support independent development and secure your lifetime updates.<br>
-                    Join the future of floating video on Mac. Built for Apple Silicon, designed for productivity.</p>
+            <div id="contact" class="price-info">
+                <h3>📞 Contact/Support/Feedback:</h3>
+                <!-- Contact Buttons -->
+                <div class="contact-buttons" style="display: flex; flex-direction: row; gap: 15px; align-items: center; justify-content: center; margin: 20px 0;">
+                    <a
+                        href="https://www.x.com/usernameisjim"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style="display: inline-flex; align-items: center; gap: 12px; padding: 16px 32px; background: #000000; border-radius: 50px; color: white; font-weight: 600; text-decoration: none; transition: all 0.3s ease; font-size: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);"
+                        onmouseover="this.style.background='#333333'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.4)'"
+                        onmouseout="this.style.background='#000000'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.3)'"
+                    >
+                        Message me on
+                        <svg style="width: 24px; height: 24px;" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+
+                    <a
+                        href="https://zap.stream/p/npub15jnskzcd5tga5rq2w0af0h46tf6lzkdkxjh58hewqrdglt0a0jkq9ygv88"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style="display: inline-flex; align-items: center; gap: 12px; padding: 16px 32px; background: #581c87; border-radius: 50px; color: white; font-weight: 600; text-decoration: none; transition: all 0.3s ease; font-size: 18px; box-shadow: 0 4px 15px rgba(88,28,135,0.3);"
+                        onmouseover="this.style.background='#7c3aed'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(88,28,135,0.4)'"
+                        onmouseout="this.style.background='#581c87'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(88,28,135,0.3)'"
+                    >
+                        <img 
+                            src="/nostr.gif" 
+                            alt="Nostr" 
+                            style="width: 24px; height: 24px;"
+                        />
+                        Nostr
+                    </a>
+
+                    <a
+                        href="mailto:jim@sunbirdcomputer.com"
+                        style="display: inline-flex; align-items: center; gap: 12px; padding: 16px 32px; background: linear-gradient(45deg, #fbbf24, #ec4899); border-radius: 50px; color: white; font-weight: 600; text-decoration: none; transition: all 0.3s ease; font-size: 18px; box-shadow: 0 4px 15px rgba(251,191,36,0.3);"
+                        onmouseover="this.style.opacity='0.9'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(251,191,36,0.4)'"
+                        onmouseout="this.style.opacity='1'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(251,191,36,0.3)'"
+                    >
+                        <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                            />
+                        </svg>
+                        E-mail
+                    </a>
+                </div>
             </div>
             
-            <a href="#" class="cta-button" onclick="openPaymentModal()">Download Floater Window - $5.00</a>
+                            <a href="#" class="cta-button" onclick="openPaymentModal()">Download for Apple Silicon</a>
             
             <p style="margin-top: 30px; opacity: 0.7;">
                 macOS Sonoma, Sequoia & future Tahoe compatible • No subscription • Lifetime updates
@@ -1076,7 +1165,7 @@
 
             <div id="paymentStatus" class="payment-status"></div>
             <div id="downloadLink" class="download-link">
-                <button onclick="downloadApp()" class="download-button">📥 Download Floater Window</button>
+                <button onclick="downloadApp()" class="download-button">📥 Download for Apple Silicon</button>
             </div>
         </div>
     </div>
@@ -1107,7 +1196,7 @@
         function updatePriceDisplays() {
             // Update CTA buttons
             document.querySelectorAll('.cta-button').forEach(button => {
-                button.textContent = `Download Floater Window - ${productInfo.formattedPrice}`;
+                button.textContent = `Download for Apple Silicon`;
             });
             
             // Update modal price
@@ -1439,22 +1528,36 @@
                             }
                         }, 1000); // Wait 1 second for scroll to complete
                     }
+                    
+                    // If clicking contact button, scroll to contact section
+                    if (this.getAttribute('href') === '#contact') {
+                        // Contact section is already set up with id="contact"
+                    }
                 }
             });
         });
 
-        // Add parallax effect to floating orbs
+        // Add subtle scroll-reactive effects to floating squares
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
+            const rate = scrolled * -0.2;
             
             const orb1 = document.querySelector('.orb1');
             const orb2 = document.querySelector('.orb2');
             const orb3 = document.querySelector('.orb3');
             
-            if (orb1) orb1.style.transform = `translateY(${rate}px)`;
-            if (orb2) orb2.style.transform = `translateY(${rate * 0.8}px)`;
-            if (orb3) orb3.style.transform = `translateY(${rate * 1.2}px)`;
+            if (orb1) {
+                orb1.style.transform = `translateY(${rate}px)`;
+                orb1.style.opacity = Math.max(0.4, 1 - scrolled * 0.0003);
+            }
+            if (orb2) {
+                orb2.style.transform = `translateY(${rate * 0.6}px)`;
+                orb2.style.opacity = Math.max(0.3, 1 - scrolled * 0.0002);
+            }
+            if (orb3) {
+                orb3.style.transform = `translateY(${rate * 1.4}px)`;
+                orb3.style.opacity = Math.max(0.5, 1 - scrolled * 0.0004);
+            }
         });
 
         // Video Control Functions
@@ -1468,6 +1571,15 @@
                 document.getElementById('pause-btn').textContent = '▶️ Play';
             }
         }
+
+        // Initialize video in paused state
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('demo-video');
+            if (video) {
+                video.pause();
+                document.getElementById('pause-btn').textContent = '▶️ Play';
+            }
+        });
 
         function muteVideo() {
             const video = document.getElementById('demo-video');
