@@ -15,15 +15,16 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
+    // Use test publishable key for development
+    const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY || 'pk_test_51RmnPXRjYW8SYgrskmHt60HhTkmUZ3zroLxkvg0wW3dvZv8486jixrdNATMg2kvUKSEKwFYQMq5XHYU8WuXRBfWL007tbgrDQe';
     
     console.log('Stripe config request - publishable key exists:', !!publishableKey);
     
-    if (!publishableKey) {
-      console.error('STRIPE_PUBLISHABLE_KEY not found in environment variables');
+    if (!publishableKey || publishableKey === 'pk_test_51RmnPXRjYW8SYgrskmHt60HhTkmUZ3zroLxkvg0wW3dvZv8486jixrdNATMg2kvUKSEKwFYQMq5XHYU8WuXRBfWL007tbgrDQe') {
+      console.error('Please replace the test publishable key with your actual test key');
       return res.status(500).json({ 
         error: 'Stripe publishable key not configured',
-        debug: 'Environment variable STRIPE_PUBLISHABLE_KEY is missing'
+        debug: 'Please update the test key in api/get-stripe-config.js'
       });
     }
     

@@ -162,6 +162,31 @@
             box-shadow: 0 15px 40px rgba(255, 0, 50, 0.5);
         }
 
+        .partner-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .partner-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(76, 175, 80, 0.4);
+        }
+
+        .partner-button:active {
+            transform: translateY(-1px);
+        }
+
         /* Rename Story Section */
         .rename-story {
             background: linear-gradient(135deg, rgba(255, 0, 50, 0.1), rgba(0, 0, 0, 0.3));
@@ -501,11 +526,14 @@
             background: linear-gradient(135deg, #1a1a1a, #2a0000);
             border: 2px solid rgba(255, 0, 50, 0.3);
             border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
+            padding: 30px;
+            max-width: 450px;
             width: 90%;
+            max-height: 85vh;
             position: relative;
             animation: modalSlideIn 0.3s ease-out;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         @keyframes modalSlideIn {
@@ -632,39 +660,51 @@
             border-radius: 8px;
             background: rgba(0, 0, 0, 0.3);
             transition: border-color 0.3s ease;
+            position: relative;
+            z-index: 10;
+            min-height: 50px;
+        }
+        
+        #card-element iframe {
+            border: none !important;
+            background: transparent !important;
+        }
+        
+        #card-element * {
+            pointer-events: auto !important;
         }
 
         #card-element.StripeElement--focus {
             border-color: #ff6b6b;
         }
 
-        .lightning-payment {
+        .bitcoin-payment {
             text-align: center;
         }
 
-        .lightning-invoice {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(255, 0, 50, 0.3);
-            border-radius: 8px;
-            padding: 15px;
+        .btcpay-iframe-container {
             margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            word-break: break-all;
-            color: #ffcc00;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, rgba(255, 0, 50, 0.1), rgba(0, 0, 0, 0.4));
+            border: 1px solid rgba(255, 0, 50, 0.2);
         }
 
-        .qr-code {
-            width: 200px;
-            height: 200px;
-            background: white;
-            margin: 20px auto;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: #333;
+        .iframe-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #1a1a1a, #2a0000);
+        }
+
+        .btcpay-iframe-container iframe {
+            display: block;
+            width: 100%;
+            height: 600px;
+            border: none;
+            background: transparent;
+            filter: brightness(0.9) contrast(1.1);
         }
 
         .payment-button {
@@ -732,6 +772,25 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
         }
+
+        .download-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #00ff88, #00cc66);
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -757,8 +816,8 @@
     <section class="hero">
         <div class="container">
             <h1>Floater Window</h1>
-            <p>The future of floating video is here. A standalone Mac app built for Apple Silicon that transforms how you watch YouTube while working.</p>
-            <a href="#" class="cta-button" onclick="openPaymentModal()">Download Floater Window - $5.00</a>
+            <p>The future of floating video is here. A standalone Mac app that transforms how you watch YouTube.</p>
+            <a href="#" class="cta-button" onclick="openPaymentModal()">Download - Built for Apple Silicon</a>
         </div>
     </section>
 
@@ -768,8 +827,8 @@
             <h2>From YouTube Floater to Floater Window</h2>
             <p>Originally called YouTube Floater, we renamed our app to Floater Window to appease YouTube and Apple's guidelines while maintaining our core mission: creating the ultimate floating video experience.</p>
             <div class="price-info">
-                <h3>🚀 Get Early Access</h3>
-                <p>A Mac App Store version will be released soon, but you can purchase it now for a more reasonable price. Support independent development and get lifetime updates!</p>
+                <h3 style="text-align: center;">🚀 Get Early Access:</h3>
+                <p>  A Mac App Store version will be released soon, but you can purchase directly from the developer now with no extra % cut by . Support independent development and get lifetime updates!</p>
             </div>
         </div>
     </section>
@@ -823,9 +882,15 @@
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
+                    <div class="feature-icon">🍎</div>
                     <h3>Apple Silicon Optimized</h3>
                     <p>Built specifically for Apple Silicon Macs, ensuring maximum performance and energy efficiency.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Easy Window Movement</h3>
+                    <p>You can click and drag the window like normal, but also provides a great "move" button you can simply click and drag the player easily anywhere on your screen without having to try to painstakingly fight to find the top bar.</p>
                 </div>
             </div>
         </div>
@@ -857,7 +922,7 @@
         <div class="container">
             <h2>Unlike Anything Else</h2>
             <p style="text-align: center; font-size: 1.2rem; margin-bottom: 50px; opacity: 0.9;">
-                Floater Window is not a Chrome extension, not just a menu app, but a <strong>standalone Mac application</strong> built for Apple Silicon that will be continuously upgraded for the future.
+                Floater Window is not a Chrome extension, not just a menu app, but a <strong>standalone Mac application</strong> with no built-in ads,<br>built for Apple Silicon that will be continuously upgraded for the future.
             </p>
             
             <div class="comparison-table">
@@ -920,11 +985,16 @@
     <section class="final-cta">
         <div class="container">
             <h2>Ready to Transform Your Video Experience?</h2>
-            <p>Join the future of floating video on Mac. Built for Apple Silicon, designed for productivity.</p>
+            <p>Explore other new features being worked on, try YouLearn out by entering in any YouTube video<br> into their website to study videos quicker with an AI synopsis:</p>
+            
+            <a href="https://app.youlearn.ai/?via=floaterwindow" target="_blank" class="partner-button">
+                🤝 Check out our Partner YouLearn (Get a large Discount off their services)
+            </a>
             
             <div class="price-info">
-                <h3>🎯 Early Bird Pricing</h3>
-                <p>Get Floater Window now before the Mac App Store release. Support independent development and secure your lifetime updates at a special price.</p>
+                <h3>🎯 Early Bird</h3>
+                <p>Get Floater Window now before the Mac App Store release. Support independent development and secure your lifetime updates.<br>
+                    Join the future of floating video on Mac. Built for Apple Silicon, designed for productivity.</p>
             </div>
             
             <a href="#" class="cta-button" onclick="openPaymentModal()">Download Floater Window - $5.00</a>
@@ -976,31 +1046,37 @@
                         <div id="card-element"></div>
                     </div>
                     <button type="submit" id="submit-payment" class="payment-button">
-                        Pay $5.00 with Card
+                        Pay with Card
                     </button>
                 </form>
             </div>
 
-            <!-- Lightning Payment Form -->
+            <!-- Bitcoin Payment Form -->
             <div id="lightningForm" class="payment-form">
-                <div class="lightning-payment">
-                    <p>Scan QR code or copy Lightning invoice:</p>
-                    <div class="qr-code" id="qrCode">QR Code will appear here</div>
-                    <div class="lightning-invoice" id="lightningInvoice">
-                        Lightning invoice will appear here...
+                <div class="bitcoin-payment">
+                    <p></p>
+                    <div class="btcpay-iframe-container">
+                        <div class="iframe-wrapper">
+                            <iframe 
+                                src="https://sunbirdcomputer.com/i/9FsgFQSBd4J2cY6UfX4shF" 
+                                width="100%" 
+                                height="600px" 
+                                frameborder="0" 
+                                allowtransparency="true"
+                                scrolling="yes">
+                            </iframe>
+                        </div>
                     </div>
-                    <button type="button" id="generate-invoice" class="payment-button" onclick="generateLightningInvoice()">
-                        Generate Lightning Invoice
-                    </button>
-                    <button type="button" id="check-payment" class="payment-button" onclick="checkLightningPayment()" style="display: none;">
-                        Check Payment Status
-                    </button>
+                    <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">
+                        After payment, you can click to show receipt, then scroll you'll see "Downloadable Content" with your Disk Image(.dmg) Mac installation file.
+                        
+                    </p>
                 </div>
             </div>
 
             <div id="paymentStatus" class="payment-status"></div>
             <div id="downloadLink" class="download-link">
-                <a href="#" onclick="downloadApp()">📥 Download Floater Window</a>
+                <button onclick="downloadApp()" class="download-button">📥 Download Floater Window</button>
             </div>
         </div>
     </div>
@@ -1051,6 +1127,8 @@
             document.getElementById('paymentModal').classList.add('active');
             document.body.style.overflow = 'hidden';
             initializeStripe();
+            // Reload BTCPayServer iframe to ensure fresh invoice
+            reloadBTCPayServerIframe();
         }
 
         function closePaymentModal() {
@@ -1074,14 +1152,35 @@
                 document.getElementById('stripeForm').classList.add('active');
             } else if (method === 'lightning') {
                 document.getElementById('lightningForm').classList.add('active');
+                // Reload the iframe to get a fresh invoice
+                reloadBTCPayServerIframe();
+            }
+        }
+
+        function reloadBTCPayServerIframe() {
+            const iframe = document.querySelector('.btcpay-iframe-container iframe');
+            if (iframe) {
+                // Add a timestamp to force reload
+                const timestamp = new Date().getTime();
+                const baseUrl = 'https://sunbirdcomputer.com/i/Ln3jtGXPQdFkiSmb1UoXv6/BTC-LN';
+                iframe.src = `${baseUrl}?t=${timestamp}`;
             }
         }
 
         // Stripe Integration
-        let stripe, elements, cardElement;
+        let stripe, elements, paymentElement;
 
         async function initializeStripe() {
             try {
+                console.log('Initializing Stripe...');
+                
+                // Check if Stripe is loaded
+                if (typeof Stripe === 'undefined') {
+                    console.error('Stripe.js not loaded yet');
+                    setTimeout(() => initializeStripe(), 1000);
+                    return;
+                }
+                
                 // 🔒 SECURE: Get publishable key from environment variables
                 const response = await fetch('/api/get-stripe-config');
                 const config = await response.json();
@@ -1092,10 +1191,22 @@
                     throw new Error('Stripe configuration not found');
                 }
                 
+                console.log('Creating Stripe instance...');
                 stripe = Stripe(config.publishableKey);
                 elements = stripe.elements();
 
-                cardElement = elements.create('card', {
+                // Clear any existing elements
+                const cardElementContainer = document.getElementById('card-element');
+                if (cardElementContainer) {
+                    cardElementContainer.innerHTML = '';
+                    console.log('Cleared card element container');
+                } else {
+                    console.error('Card element container not found!');
+                    return;
+                }
+
+                console.log('Creating card element...');
+                paymentElement = elements.create('card', {
                     style: {
                         base: {
                             color: '#ffffff',
@@ -1108,19 +1219,39 @@
                     },
                 });
 
-                cardElement.mount('#card-element');
+                console.log('Mounting payment element...');
+                paymentElement.mount('#card-element');
                 console.log('Stripe initialized successfully');
             } catch (error) {
                 console.error('Failed to initialize Stripe:', error);
                 
-                // Fallback: Use your live publishable key directly
-                const publishableKey = 'pk_live_51Mx80sDJ7rG9FLpHTFdY5sRL5uIUkFkXFdQ1P6syUOqVC7GMRwgIUQymPT1uE2x0DsEJwsokonOu1zTuDqTJc9TP00rnJ3UnBX';
+                // Check if Stripe is loaded for fallback
+                if (typeof Stripe === 'undefined') {
+                    console.error('Stripe.js not loaded for fallback');
+                    setTimeout(() => initializeStripe(), 1000);
+                    return;
+                }
+                
+                // Fallback: Use your test publishable key directly
+                const publishableKey = 'pk_test_51RmnPXRjYW8SYgrskmHt60HhTkmUZ3zroLxkvg0wW3dvZv8486jixrdNATMg2kvUKSEKwFYQMq5XHYU8WuXRBfWL007tbgrDQe';
                 console.log('Using fallback publishable key');
                 
+                console.log('Creating fallback Stripe instance...');
                 stripe = Stripe(publishableKey);
                 elements = stripe.elements();
 
-                cardElement = elements.create('card', {
+                // Clear any existing elements
+                const cardElementContainer = document.getElementById('card-element');
+                if (cardElementContainer) {
+                    cardElementContainer.innerHTML = '';
+                    console.log('Cleared card element container (fallback)');
+                } else {
+                    console.error('Card element container not found in fallback!');
+                    return;
+                }
+
+                console.log('Creating fallback card element...');
+                paymentElement = elements.create('card', {
                     style: {
                         base: {
                             color: '#ffffff',
@@ -1133,7 +1264,8 @@
                     },
                 });
 
-                cardElement.mount('#card-element');
+                console.log('Mounting fallback payment element...');
+                paymentElement.mount('#card-element');
                 console.log('Stripe initialized with fallback key');
             }
         }
@@ -1165,41 +1297,46 @@
                 const { clientSecret, paymentIntentId } = await createIntentResponse.json();
 
                 // Step 2: Confirm payment with Stripe
-                const { error } = await stripe.confirmPayment({
-                    elements,
-                    confirmParams: {
-                        return_url: window.location.href,
-                        receipt_email: email,
+                // Ensure elements are properly mounted
+                if (!elements || !paymentElement) {
+                    throw new Error('Stripe Elements not properly initialized');
+                }
+
+                const { error } = await stripe.confirmCardPayment(clientSecret, {
+                    payment_method: {
+                        card: paymentElement,
+                        billing_details: {
+                            email: email,
+                        },
                     },
-                    clientSecret: clientSecret,
                 });
 
                 if (error) {
                     throw new Error(error.message);
                 }
 
-                // Step 3: Confirm payment on backend
-                const confirmResponse = await fetch('/api/confirm-payment', {
-                    method: 'POST',
+                // Payment successful! Generate download token and validate with backend
+                const downloadToken = `token_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+                
+                // Call backend to validate and store the token
+                fetch(`/api/download?token=${encodeURIComponent(downloadToken)}`, {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ paymentIntentId }),
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        localStorage.setItem('downloadToken', downloadToken);
+                        showPaymentSuccess();
+                    } else {
+                        throw new Error('Failed to validate download token');
+                    }
+                })
+                .catch(error => {
+                    console.error('Token validation error:', error);
+                    showPaymentError('Payment successful but download setup failed. Please contact support.');
                 });
-
-                if (!confirmResponse.ok) {
-                    throw new Error('Failed to confirm payment');
-                }
-
-                const confirmResult = await confirmResponse.json();
-
-                if (confirmResult.success) {
-                    // Store download token for later use
-                    localStorage.setItem('downloadToken', confirmResult.downloadToken);
-                    showPaymentSuccess();
-                } else {
-                    throw new Error(confirmResult.error || 'Payment confirmation failed');
-                }
 
             } catch (error) {
                 console.error('Payment error:', error);
@@ -1210,56 +1347,9 @@
             }
         });
 
-        // Lightning Payment Functions
-        let lightningPaymentHash = null;
-
-        function generateLightningInvoice() {
-            const generateButton = document.getElementById('generate-invoice');
-            generateButton.disabled = true;
-            generateButton.textContent = 'Generating...';
-
-            // In a real implementation, you would call your Lightning backend
-            // For demo, we'll simulate invoice generation
-            setTimeout(() => {
-                const mockInvoice = 'lnbc49900n1p3xnhl2pp5fkhwj7spahkq7k8j9k8x8w8k8j8x8w8k8j8x8w8k8j8x8w8k8j8qsp5zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygs9q2gqsq5rn3n8x8k8j8x8w8k8j8x8w8k8j8x8w8k8j8x8w8k8j8x8w8k8j8x8w8k8j8x8w8k8j8x8w8k8j8x8w8k8j8x8w8k8j8x8w8k8j8x8w8k8j8x8w8k8j8x8cqzpgxqyz5vqsp5zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zyg3zygs9q2gqsqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq4sqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq';
-                
-                lightningPaymentHash = 'mock_payment_hash_' + Math.random().toString(36).substr(2, 9);
-                
-                document.getElementById('lightningInvoice').textContent = mockInvoice;
-                document.getElementById('qrCode').innerHTML = `
-                    <div style="text-align: center; padding: 20px;">
-                        <div style="font-size: 48px; margin-bottom: 10px;">📱</div>
-                        <div>Scan with Lightning Wallet</div>
-                    </div>
-                `;
-                
-                generateButton.style.display = 'none';
-                document.getElementById('check-payment').style.display = 'block';
-                
-                // Auto-check payment status every 3 seconds
-                const checkInterval = setInterval(() => {
-                    checkLightningPaymentStatus(checkInterval);
-                }, 3000);
-                
-            }, 1500);
-        }
-
-        function checkLightningPayment() {
-            const checkButton = document.getElementById('check-payment');
-            checkButton.textContent = 'Checking...';
-            setTimeout(() => {
-                checkButton.textContent = 'Check Payment Status';
-            }, 1000);
-        }
-
-        function checkLightningPaymentStatus(interval) {
-            // In a real implementation, check payment status with your Lightning backend
-            // For demo, simulate payment after 10 seconds
-            if (Math.random() > 0.7) { // 30% chance each check
-                clearInterval(interval);
-                showPaymentSuccess();
-            }
-        }
+        // Bitcoin Payment Functions
+        // BTCPayServer iframe handles all payment processing
+        // No additional JavaScript needed as the iframe manages the payment flow
 
         // Payment Status Functions
         function showPaymentSuccess() {
@@ -1293,9 +1383,33 @@
                 return;
             }
 
-            // Use the secure download endpoint
-            const downloadUrl = `/api/download?token=${encodeURIComponent(downloadToken)}`;
-            window.location.href = downloadUrl;
+            // Get the secure download URL from our API
+            fetch(`/api/secure-download?token=${encodeURIComponent(downloadToken)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Create a temporary link to trigger the download
+                        const link = document.createElement('a');
+                        link.href = data.downloadUrl;
+                        link.download = 'Floater Window-1.0.4-arm64.dmg';
+                        link.target = '_blank';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        
+                        // Clear the token after successful download
+                        localStorage.removeItem('downloadToken');
+                        
+                        // Show success message
+                        showPaymentSuccess('Download started! The file will download automatically.');
+                    } else {
+                        showPaymentError(data.error || 'Download failed. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Download error:', error);
+                    showPaymentError('Download failed. Please try again.');
+                });
         }
 
         // Close modal when clicking outside
@@ -1314,6 +1428,17 @@
                     target.scrollIntoView({
                         behavior: 'smooth'
                     });
+                    
+                    // If clicking demo button, start playing the video
+                    if (this.getAttribute('href') === '#demo') {
+                        setTimeout(() => {
+                            const video = document.getElementById('demo-video');
+                            if (video) {
+                                video.play();
+                                document.getElementById('pause-btn').textContent = '⏸️ Pause';
+                            }
+                        }, 1000); // Wait 1 second for scroll to complete
+                    }
                 }
             });
         });

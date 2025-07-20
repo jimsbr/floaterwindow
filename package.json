@@ -11,9 +11,14 @@
     "dev:local": "STRIPE_SECRET_KEY=sk_test_your_key_here STRIPE_PUBLISHABLE_KEY=pk_test_your_key_here vercel dev"
   },
   "dependencies": {
-    "stripe": "^14.0.0",
+    "@aws-sdk/client-s3": "^3.848.0",
+    "@aws-sdk/s3-request-presigner": "^3.848.0",
+    "@vercel/blob": "^1.1.1",
     "cors": "^2.8.5",
-    "node-fetch": "^2.6.7"
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "node-fetch": "^2.6.7",
+    "stripe": "^14.25.0"
   },
   "devDependencies": {
     "vercel": "^32.0.0"
@@ -21,4 +26,4 @@
   "engines": {
     "node": ">=18.0.0"
   }
-} 
+}

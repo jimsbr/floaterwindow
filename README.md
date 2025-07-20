@@ -1,237 +1,142 @@
-# Floater Window Website
+# 🪟 Floater Window - Secure Download System
 
-A modern landing page for Floater Window with integrated Stripe payments and secure file downloads.
+A secure payment and download system for Floater Window, featuring Stripe payment integration and Cloudflare R2 file hosting.
 
-## Features
+## ✨ Features
 
-- 🎨 Modern, responsive design with animated elements
-- 💳 Integrated Stripe payment processing
-- 🔒 Secure file downloads after payment verification
-- ⚡ Lightning-fast deployment on Vercel
-- 📱 Mobile-optimized interface
+- 🔒 **Secure Payment Processing** - Stripe integration with live payments
+- 🛡️ **Download Protection** - Token-based access control with one-time use tokens
+- ☁️ **Cloud Storage** - Cloudflare R2 for fast, global file distribution
+- 🔐 **Signed URLs** - Time-limited secure download links
+- 📱 **Responsive Design** - Beautiful, modern UI that works on all devices
+- ⚡ **Fast Performance** - Optimized for speed and reliability
 
-## Setup Instructions
+## 🚀 Quick Start
 
-### 1. Prerequisites
-
-- Node.js 18+ installed
-- Vercel CLI installed (`npm i -g vercel`)
-- Stripe account with API keys
-- Your .dmg file hosted somewhere accessible
-
-### 2. Quick Setup (Recommended)
-
-For the fastest setup, follow the [Quick Setup Guide](SETUP.md) which will get you live in 10 minutes.
-
-### 3. Stripe Product Setup
-
-To get paid properly, you need to set up your Stripe product:
-
-1. **Get your Stripe keys** from [Stripe Dashboard](https://dashboard.stripe.com/apikeys)
-2. **Run the setup script**:
-   ```bash
-   export STRIPE_SECRET_KEY=sk_test_your_secret_key_here
-   node setup-stripe-product.js
-   ```
-3. **Add environment variables** to Vercel:
-   ```bash
-   STRIPE_SECRET_KEY=sk_test_your_secret_key_here
-   STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key_here
-   STRIPE_PRODUCT_ID=prod_xxxxxxxxxxxxx (from setup script)
-   STRIPE_PRICE_ID=price_xxxxxxxxxxxxx (from setup script)
-   STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxx (from setup script)
-   DOWNLOAD_URL=https://your-download-url.com/floater-window.dmg
-   ```
-
-### 4. Manual Stripe Configuration (Alternative)
-
-If you prefer to set up manually:
-1. Create a product in [Stripe Dashboard](https://dashboard.stripe.com/products)
-2. Set the price to $4.99 (or your desired amount)
-3. Copy the Product ID and add it to environment variables
-
-### 5. File Hosting
-
-You have several options for hosting your .dmg file:
-
-#### Option A: GitHub Releases (Recommended)
-1. Create a GitHub repository
-2. Upload your .dmg file as a release
-3. Set `DOWNLOAD_URL` to the GitHub release URL
-
-#### Option B: Vercel Blob Storage
-1. Use Vercel Blob for file storage
-2. Update the download endpoint to serve from Blob
-
-#### Option C: CDN (AWS S3, Cloudflare, etc.)
-1. Upload your file to your preferred CDN
-2. Set `DOWNLOAD_URL` to the CDN URL
-
-### 6. Local Development
-
+### Local Development
 ```bash
+# Clone the repository
+git clone <your-repo-url>
+cd floater-window-website
+
 # Install dependencies
 npm install
 
+# Run setup script
+./setup-deployment.sh
+
 # Start development server
-npm run dev
+node server.js
+
+# Visit http://localhost:3000
 ```
 
-### 7. Deployment
+### Production Deployment
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
-```bash
-# Deploy to Vercel
-vercel
-
-# Or deploy to production
-vercel --prod
-```
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 floater-window-website/
 ├── public/
-│   └── index.html          # Main landing page
-├── admin.html              # Revenue dashboard
+│   ├── index.html          # Main website with payment UI
+│   ├── floaterwindow.mp4   # Demo video
+│   └── README.md
 ├── api/
-│   ├── create-payment-intent.js  # Creates Stripe payment intents
-│   ├── confirm-payment.js        # Confirms payments and generates download tokens
-│   ├── download.js              # Handles secure file downloads
-│   ├── get-product-info.js      # Fetches product details from Stripe
-│   ├── get-stripe-config.js     # Returns Stripe configuration
-│   ├── payment-analytics.js     # Payment analytics and revenue tracking
-│   └── webhook.js              # Stripe webhook handler
-├── setup-stripe-product.js     # Automated Stripe product setup
-├── package.json
-├── vercel.json
-├── SETUP.md                   # Quick setup guide
-├── STRIPE_SETUP.md            # Detailed Stripe configuration
-└── README.md
+│   └── secure-download.js  # R2 download handler
+├── server.js               # Express server with API endpoints
+├── package.json            # Dependencies and scripts
+├── vercel.json            # Vercel deployment config
+├── .gitignore             # Git ignore rules
+├── DEPLOYMENT.md          # Deployment guide
+├── production-config.js   # Production credentials (DO NOT COMMIT)
+└── setup-deployment.sh    # Setup script
 ```
 
-## API Endpoints
+## 🔧 Configuration
 
-### POST /api/create-payment-intent
-Creates a Stripe payment intent using your configured product price.
+### Environment Variables
+The following environment variables are required for production:
 
-**Request:**
-```json
-{
-  "email": "customer@example.com"
-}
-```
-
-**Response:**
-```json
-{
-  "clientSecret": "pi_xxx_secret_xxx",
-  "paymentIntentId": "pi_xxx"
-}
-```
-
-### POST /api/confirm-payment
-Confirms payment and generates download token.
-
-**Request:**
-```json
-{
-  "paymentIntentId": "pi_xxx"
-}
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "downloadToken": "abc123...",
-  "expiresAt": "2024-01-01T00:00:00.000Z"
-}
-```
-
-### GET /api/download?token=xxx
-Downloads the .dmg file after token verification.
-
-### GET /api/payment-analytics?days=30
-Returns payment analytics and revenue data.
-
-**Response:**
-```json
-{
-  "summary": {
-    "totalRevenue": 149.70,
-    "totalPayments": 30,
-    "averageOrderValue": 4.99,
-    "period": "30 days"
-  },
-  "recentPayments": [...],
-  "dailyRevenue": {...}
-}
-```
-
-### POST /api/webhook
-Handles Stripe webhook events for payment tracking.
-
-## Security Considerations
-
-- Download tokens expire after 24 hours
-- All payments are processed through Stripe's secure infrastructure
-- CORS is properly configured for API endpoints
-- Environment variables keep sensitive data secure
-
-## Customization
-
-### Changing the Price
-1. **Recommended**: Update the price in your Stripe Dashboard - the website will automatically reflect the new price
-2. **Alternative**: Update the amount in `setup-stripe-product.js` and run the setup script again
-3. **Manual**: Update the amount in `api/create-payment-intent.js` (currently 499 cents = $4.99)
-
-### Styling
-The website uses CSS custom properties and can be easily customized by modifying the styles in `public/index.html`.
-
-### Adding More Payment Methods
-The current implementation supports Stripe cards and has a placeholder for Lightning payments. You can extend this by:
-
-1. Adding more payment method options in the HTML
-2. Creating additional API endpoints for other payment processors
-3. Updating the frontend JavaScript to handle new payment flows
-
-## Revenue Tracking
-
-### Admin Dashboard
-Access your revenue dashboard at `/admin.html` to view:
-- Total revenue and payment counts
-- Average order value
-- Recent payment details
-- Daily revenue breakdown
-
-### Analytics API
-Use the `/api/payment-analytics` endpoint to integrate analytics into your own dashboard.
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Payment fails**: Check your Stripe API keys and webhook configuration
-2. **Download doesn't work**: Verify the `DOWNLOAD_URL` environment variable
-3. **CORS errors**: Ensure your domain is properly configured in Vercel
-4. **Product not found**: Make sure `STRIPE_PRODUCT_ID` is set correctly
-5. **Webhook issues**: Verify `STRIPE_WEBHOOK_SECRET` is configured
-
-### Debug Mode
-
-To enable debug logging, add this to your environment variables:
 ```bash
-DEBUG=true
+# Cloudflare R2 Configuration
+R2_ENDPOINT=https://975367a7e793daa1d0c5da8013652e49.r2.cloudflarestorage.com
+R2_ACCESS_KEY_ID=077904e18fcc89c5d869645df8b71b90
+R2_SECRET_ACCESS_KEY=prod_SiB6HMniwDcQYb
+R2_BUCKET_NAME=floater-window-downloads
+
+# Stripe Production Keys
+STRIPE_SECRET_KEY=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
+STRIPE_PUBLISHABLE_KEY=pk_live_51Mx80sDJ7rG9FLpHTFdY5sRL5uIUkFkXFdQ1P6syUOqVC7GMRwgIUQymPT1uE2x0DsEJwsokonOu1zTuDqTJc9TP00rnJ3UnBX
 ```
 
-## Support
+## 🔒 Security Features
 
-For issues related to:
-- **Stripe**: Check the [Stripe documentation](https://stripe.com/docs)
-- **Vercel**: Check the [Vercel documentation](https://vercel.com/docs)
-- **This project**: Open an issue in the repository
+- **Token-based Access Control** - One-time use download tokens
+- **Signed URLs** - Time-limited access to files (1 hour expiration)
+- **Payment Verification** - Only paid users get download access
+- **Environment Variable Protection** - No secrets in code
+- **CORS Protection** - Proper headers for cross-origin requests
 
-## License
+## 🧪 Testing
 
-This project is proprietary software. All rights reserved. 
+### Test Payment Flow
+1. Visit the website
+2. Click "Buy Now" 
+3. Complete payment with test card: `4242 4242 4242 4242`
+4. Verify download token generation
+5. Test secure download flow
+
+### API Endpoints
+- `GET /api/get-stripe-config` - Returns Stripe publishable key
+- `GET /api/get-product-info` - Returns product information
+- `POST /api/create-payment-intent` - Creates Stripe payment intent
+- `GET /api/download` - Validates download token
+- `GET /api/secure-download` - Generates signed download URL
+
+## 📊 Monitoring
+
+### Stripe Dashboard
+- Monitor payments: https://dashboard.stripe.com/payments
+- View webhook events for payment confirmations
+
+### Cloudflare R2 Dashboard
+- Monitor file access: https://dash.cloudflare.com/
+- Check bandwidth and storage usage
+
+## 🚨 Important Notes
+
+1. **File Upload**: The .dmg file must be uploaded to your Cloudflare R2 bucket
+2. **Domain Setup**: Configure your custom domain in your deployment platform
+3. **SSL**: Ensure HTTPS is enabled (automatic on Vercel/Railway/Render)
+4. **Backup**: Keep a backup of your environment variables
+
+## 🆘 Troubleshooting
+
+### Common Issues:
+1. **"NoSuchKey" error**: File not uploaded to R2 bucket
+2. **Payment fails**: Check Stripe webhook configuration
+3. **Download fails**: Verify R2 credentials and bucket permissions
+4. **CORS errors**: Check environment variable configuration
+
+## 📈 Deployment Options
+
+- **Vercel** (Recommended) - Easy deployment with automatic HTTPS
+- **Railway** - Simple container deployment
+- **Render** - Free tier available with automatic deployments
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+This project is proprietary software. All rights reserved.
+
+---
+
+**⚠️ Security Notice**: Never commit the `.env` file or `production-config.js` to Git. These contain sensitive credentials! 
