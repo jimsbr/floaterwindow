@@ -838,16 +838,16 @@
             <p>Watch how Floater Window transforms your YouTube experience with seamless floating video playback.</p>
             
             <div class="video-container">
-                <video id="demo-video" controls>
+                <video id="demo-video">
                     <source src="/floaterwindow.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
             
             <div class="video-controls">
-                <button id="play-pause-btn" class="video-btn">▶️ Play</button>
-                <button id="mute-btn" class="video-btn">🔊 Mute</button>
-                <button id="fullscreen-btn" class="video-btn">⛶ Fullscreen</button>
+                <button id="pause-btn" class="video-btn" onclick="pauseVideo()">⏸️ Pause</button>
+                <button id="mute-btn" class="video-btn" onclick="muteVideo()">🔊 Mute</button>
+                <button id="fullscreen-btn" class="video-btn" onclick="fullscreenVideo()">⛶ Fullscreen</button>
             </div>
         </div>
     </section>
@@ -1331,6 +1331,40 @@
             if (orb2) orb2.style.transform = `translateY(${rate * 0.8}px)`;
             if (orb3) orb3.style.transform = `translateY(${rate * 1.2}px)`;
         });
+
+        // Video Control Functions
+        function pauseVideo() {
+            const video = document.getElementById('demo-video');
+            if (video.paused) {
+                video.play();
+                document.getElementById('pause-btn').textContent = '⏸️ Pause';
+            } else {
+                video.pause();
+                document.getElementById('pause-btn').textContent = '▶️ Play';
+            }
+        }
+
+        function muteVideo() {
+            const video = document.getElementById('demo-video');
+            if (video.muted) {
+                video.muted = false;
+                document.getElementById('mute-btn').textContent = '🔊 Mute';
+            } else {
+                video.muted = true;
+                document.getElementById('mute-btn').textContent = '🔇 Unmute';
+            }
+        }
+
+        function fullscreenVideo() {
+            const video = document.getElementById('demo-video');
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.webkitRequestFullscreen) {
+                video.webkitRequestFullscreen();
+            } else if (video.msRequestFullscreen) {
+                video.msRequestFullscreen();
+            }
+        }
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
