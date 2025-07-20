@@ -75,6 +75,25 @@
             background-clip: text;
         }
 
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
         /* Hero Section */
         .hero {
             text-align: center;
@@ -186,6 +205,109 @@
             max-width: 800px;
             margin: 0 auto 30px;
             opacity: 0.9;
+        }
+
+        /* Demo Video Section */
+        .demo-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, rgba(255, 0, 50, 0.05), rgba(0, 0, 0, 0.2));
+            position: relative;
+        }
+
+        .demo-section h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff0032, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .demo-section p {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .video-container {
+            width: 75%;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .video-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 0, 50, 0.1), rgba(255, 100, 100, 0.05));
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        #demo-video {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        #demo-video:hover {
+            opacity: 1;
+        }
+
+        .video-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .video-btn {
+            background: linear-gradient(45deg, #ff0032, #ff6b6b);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .video-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 0, 50, 0.3);
+        }
+
+        .video-btn:active {
+            transform: translateY(0);
+        }
+
+        .demo-btn {
+            background: linear-gradient(45deg, #ff0032, #ff6b6b);
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: white !important;
+            font-weight: 600;
+            opacity: 1 !important;
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 50, 0.3);
         }
 
         /* Features Grid */
@@ -623,7 +745,11 @@
     <!-- Header -->
     <header>
         <nav class="container">
-            <div class="logo">Floater Window</div>
+            <div class="logo"></div>
+            <div class="nav-links">
+                <a href="#demo" class="demo-btn">Demo</a>
+                <a href="#" onclick="openPaymentModal()">Get It Now</a>
+            </div>
         </nav>
     </header>
 
@@ -632,7 +758,7 @@
         <div class="container">
             <h1>Floater Window</h1>
             <p>The future of floating video is here. A standalone Mac app built for Apple Silicon that transforms how you watch YouTube while working.</p>
-            <a href="#" class="cta-button" onclick="openPaymentModal()">Download for Apple Silicon - $4.99</a>
+            <a href="#" class="cta-button" onclick="openPaymentModal()">Download Floater Window - $5.00</a>
         </div>
     </section>
 
@@ -649,9 +775,9 @@
     </section>
 
     <!-- Features Section -->
-    <section class="features">
+    <section id="features" class="features">
         <div class="container">
-            <h2>Revolutionary Features</h2>
+            <h2>Features</h2>
             
             <div class="features-grid">
                 <div class="feature-card">
@@ -701,6 +827,27 @@
                     <h3>Apple Silicon Optimized</h3>
                     <p>Built specifically for Apple Silicon Macs, ensuring maximum performance and energy efficiency.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Video Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <h2>See Floater Window in Action</h2>
+            <p>Watch how Floater Window transforms your YouTube experience with seamless floating video playback.</p>
+            
+            <div class="video-container">
+                <video id="demo-video" controls>
+                    <source src="/floaterwindow.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            
+            <div class="video-controls">
+                <button id="play-pause-btn" class="video-btn">▶️ Play</button>
+                <button id="mute-btn" class="video-btn">🔊 Mute</button>
+                <button id="fullscreen-btn" class="video-btn">⛶ Fullscreen</button>
             </div>
         </div>
     </section>
@@ -780,7 +927,7 @@
                 <p>Get Floater Window now before the Mac App Store release. Support independent development and secure your lifetime updates at a special price.</p>
             </div>
             
-            <a href="#" class="cta-button" onclick="openPaymentModal()">Download for Apple Silicon - $4.99</a>
+            <a href="#" class="cta-button" onclick="openPaymentModal()">Download Floater Window - $5.00</a>
             
             <p style="margin-top: 30px; opacity: 0.7;">
                 macOS Sonoma, Sequoia & future Tahoe compatible • No subscription • Lifetime updates
@@ -802,7 +949,7 @@
             
             <div class="payment-header">
                 <h2>Get Floater Window</h2>
-                <div class="price-display">$4.99</div>
+                <div class="price-display">$5.00</div>
                 <p>Choose your payment method:</p>
             </div>
 
