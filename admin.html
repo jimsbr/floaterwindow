@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floater Window - Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff0032, #ff6b6b);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .period-selector {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .period-btn {
+            padding: 10px 20px;
+            border: 2px solid #ff0032;
+            background: white;
+            color: #ff0032;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .period-btn.active,
+        .period-btn:hover {
+            background: #ff0032;
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ff0032;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .recent-payments {
+            padding: 30px;
+        }
+
+        .recent-payments h3 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .payment-list {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .payment-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 20px;
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+            align-items: center;
+        }
+
+        .payment-item:last-child {
+            border-bottom: none;
+        }
+
+        .payment-item:hover {
+            background: #f8f9fa;
+        }
+
+        .payment-email {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .payment-amount {
+            font-weight: 700;
+            color: #28a745;
+        }
+
+        .payment-date {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .payment-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #6c757d;
+        }
+
+        .error {
+            text-align: center;
+            padding: 50px;
+            color: #dc3545;
+        }
+
+        .refresh-btn {
+            background: #ff0032;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: #d10028;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .payment-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .period-selector {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Floater Window Revenue</h1>
+            <p>Track your sales and payments in real-time</p>
+        </div>
+
+        <div class="controls">
+            <div class="period-selector">
+                <button class="period-btn active" data-days="7">Last 7 Days</button>
+                <button class="period-btn" data-days="30">Last 30 Days</button>
+                <button class="period-btn" data-days="90">Last 90 Days</button>
+                <button class="refresh-btn" onclick="loadAnalytics()">🔄 Refresh</button>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalRevenue">$0.00</div>
+                <div class="stat-label">Total Revenue</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalPayments">0</div>
+                <div class="stat-label">Total Payments</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="averageOrder">$0.00</div>
+                <div class="stat-label">Average Order</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="period">7 days</div>
+                <div class="stat-label">Period</div>
+            </div>
+        </div>
+
+        <div class="recent-payments">
+            <h3>📊 Recent Payments</h3>
+            <div class="payment-list" id="paymentList">
+                <div class="loading">Loading payments...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPeriod = 7;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAnalytics();
+            setupPeriodButtons();
+        });
+
+        function setupPeriodButtons() {
+            document.querySelectorAll('.period-btn').forEach(btn => {
+                if (btn.dataset.days) {
+                    btn.addEventListener('click', function() {
+                        // Update active button
+                        document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        // Update period and reload
+                        currentPeriod = parseInt(this.dataset.days);
+                        loadAnalytics();
+                    });
+                }
+            });
+        }
+
+        async function loadAnalytics() {
+            try {
+                // Show loading state
+                document.getElementById('paymentList').innerHTML = '<div class="loading">Loading payments...</div>';
+                
+                // Fetch analytics data
+                const response = await fetch(`/api/payment-analytics?days=${currentPeriod}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch analytics');
+                }
+                
+                const data = await response.json();
+                
+                // Update stats
+                updateStats(data.summary);
+                
+                // Update payments list
+                updatePaymentsList(data.recentPayments);
+                
+            } catch (error) {
+                console.error('Error loading analytics:', error);
+                document.getElementById('paymentList').innerHTML = 
+                    '<div class="error">❌ Failed to load payments. Please try again.</div>';
+            }
+        }
+
+        function updateStats(summary) {
+            document.getElementById('totalRevenue').textContent = 
+                new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
+                    .format(summary.totalRevenue);
+            
+            document.getElementById('totalPayments').textContent = summary.totalPayments;
+            
+            document.getElementById('averageOrder').textContent = 
+                new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
+                    .format(summary.averageOrderValue);
+            
+            document.getElementById('period').textContent = summary.period;
+        }
+
+        function updatePaymentsList(payments) {
+            if (payments.length === 0) {
+                document.getElementById('paymentList').innerHTML = 
+                    '<div class="loading">No payments found for this period.</div>';
+                return;
+            }
+
+            const paymentsHtml = payments.map(payment => {
+                const date = new Date(payment.created * 1000).toLocaleDateString();
+                const amount = new Intl.NumberFormat('en-US', { 
+                    style: 'currency', 
+                    currency: payment.currency.toUpperCase() 
+                }).format(payment.amount / 100);
+                
+                return `
+                    <div class="payment-item">
+                        <div class="payment-email">${payment.email || 'No email'}</div>
+                        <div class="payment-amount">${amount}</div>
+                        <div class="payment-date">${date}</div>
+                        <div class="payment-status status-success">Paid</div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('paymentList').innerHTML = paymentsHtml;
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadAnalytics, 30000);
+    </script>
+</body>
+</html> 

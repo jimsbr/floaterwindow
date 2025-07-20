@@ -1,0 +1,24 @@
+{
+  "name": "floater-window-website",
+  "version": "1.0.0",
+  "description": "Floater Window - The Future of Video Floating",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build step required'",
+    "start": "vercel dev",
+    "setup": "node setup-stripe-product.js",
+    "dev:local": "STRIPE_SECRET_KEY=sk_test_your_key_here STRIPE_PUBLISHABLE_KEY=pk_test_your_key_here vercel dev"
+  },
+  "dependencies": {
+    "stripe": "^14.0.0",
+    "cors": "^2.8.5",
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 
