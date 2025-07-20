@@ -15,9 +15,21 @@ module.exports = async (req, res) => {
   }
 
   try {
+    const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
+    
+    console.log('Stripe config request - publishable key exists:', !!publishableKey);
+    
+    if (!publishableKey) {
+      console.error('STRIPE_PUBLISHABLE_KEY not found in environment variables');
+      return res.status(500).json({ 
+        error: 'Stripe publishable key not configured',
+        debug: 'Environment variable STRIPE_PUBLISHABLE_KEY is missing'
+      });
+    }
+    
     // Return only the publishable key (safe to share)
     res.status(200).json({
-      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY
+      publishableKey: publishableKey
     });
   } catch (error) {
     console.error('Error getting Stripe config:', error);

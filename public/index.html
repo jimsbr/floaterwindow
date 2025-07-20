@@ -939,6 +939,8 @@
                 const response = await fetch('/api/get-stripe-config');
                 const config = await response.json();
                 
+                console.log('Stripe config response:', config);
+                
                 if (!config.publishableKey) {
                     throw new Error('Stripe configuration not found');
                 }
@@ -960,11 +962,32 @@
                 });
 
                 cardElement.mount('#card-element');
+                console.log('Stripe initialized successfully');
             } catch (error) {
                 console.error('Failed to initialize Stripe:', error);
-                // Fallback: You can still hardcode the publishable key here if needed
-                // const publishableKey = 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY_HERE';
-                // stripe = Stripe(publishableKey);
+                
+                // Fallback: Use your live publishable key directly
+                const publishableKey = 'pk_live_51Mx80sDJ7rG9FLpHTFdY5sRL5uIUkFkXFdQ1P6syUOqVC7GMRwgIUQymPT1uE2x0DsEJwsokonOu1zTuDqTJc9TP00rnJ3UnBX';
+                console.log('Using fallback publishable key');
+                
+                stripe = Stripe(publishableKey);
+                elements = stripe.elements();
+
+                cardElement = elements.create('card', {
+                    style: {
+                        base: {
+                            color: '#ffffff',
+                            fontFamily: '"SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif',
+                            fontSize: '16px',
+                            '::placeholder': {
+                                color: '#888888',
+                            },
+                        },
+                    },
+                });
+
+                cardElement.mount('#card-element');
+                console.log('Stripe initialized with fallback key');
             }
         }
 
@@ -1036,7 +1059,7 @@
                 showPaymentError(error.message || 'Payment failed. Please try again.');
             } finally {
                 submitButton.disabled = false;
-                submitButton.textContent = 'Pay $4.99 with Card';
+                submitButton.textContent = 'Pay $5.00 with Card';
             }
         });
 
