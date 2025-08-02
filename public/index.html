@@ -1551,7 +1551,7 @@
             const contactBtn = document.querySelector('.contact-btn');
             if (contactBtn) {
                 contactBtn.addEventListener('click', function(e) {
-                    const target = document.getElementById('contact');
+                    const target = document.querySelector('.final-cta h2');
                     if (target) {
                         e.preventDefault();
                         const y = target.getBoundingClientRect().top + window.pageYOffset - 30;
