@@ -1089,6 +1089,10 @@
                         E-mail
                     </a>
                 </div>
+                <!-- Product Hunt Badge -->
+                <div style="display: flex; justify-content: center; margin-top: 20px;">
+                  <a href="https://www.producthunt.com/products/floater-window?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-floater&#0045;window" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=997285&theme=dark&t=1753400933696" alt="Floater&#0032;Window - A&#0032;YouTube&#0032;Player&#0032;that&#0032;Floats | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+                </div>
             </div>
             
                             <a href="#" class="cta-button" onclick="openPaymentModal()">Download for Apple Silicon</a>
@@ -1540,6 +1544,21 @@
                     }
                 }
             });
+        });
+
+        // Custom scroll for Contact button with offset
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactBtn = document.querySelector('.contact-btn');
+            if (contactBtn) {
+                contactBtn.addEventListener('click', function(e) {
+                    const target = document.getElementById('contact');
+                    if (target) {
+                        e.preventDefault();
+                        const y = target.getBoundingClientRect().top + window.pageYOffset - 30;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                });
+            }
         });
 
         // Add subtle scroll-reactive effects to floating squares
